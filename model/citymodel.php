@@ -1,5 +1,4 @@
 <?php
-
 class CityModel {
     private $data = array(
         array('id' => 1, 'continente' => 'América do Norte', 'país' => 'Estados Unidos', 'cidade' => 'Nova York', 'imagem' => 'imagens/novayork.jpg', 'descrição' => 'Nova Iorque, uma metrópole global nos Estados Unidos, é composta por cinco distintos distritos, cada um com sua própria personalidade. Manhattan destaca-se pelos icônicos arranha-céus e pontos turísticos como Central Park. Brooklyn é conhecido pela cena artística e atmosfera descontraída, enquanto Queens exibe uma notável diversidade étnica. O Bronx oferece atrações como o Jardim Zoológico e o Yankee Stadium. A cidade é famosa por sua arquitetura impressionante, incluindo a Estátua da Liberdade, e é um centro global de negócios, moda e gastronomia. Com um eficiente sistema de transporte público, Nova Iorque atrai visitantes e residentes com sua energia pulsante e diversidade cultural.'),
@@ -15,6 +14,31 @@ class CityModel {
         return $this->data;
     }
 
-}
+    public function adicionarComentarios($username, $cityId, $comment) {
+        $db = new Database();
 
+        $sql = "INSERT INTO comentarios (city_id, username, comment) VALUES (:cityId, :username, :comment)";
+        $params = array(':cityId' => $cityId, ':username' => $username, ':comment' => $comment);
+
+        try {
+            $db->execute($sql, $params);
+        } catch (PDOException $e) {
+            echo 'Erro ao adicionar comentário: ' . $e->getMessage();
+        }
+    }
+
+    public function getComentarios($cityId) {
+        $db = new Database();
+        $sql = "SELECT * FROM comentarios WHERE city_id = :cityId";
+        $params = array(':cityId' => $cityId);
+
+        try {
+            $result = $db->query($sql, $params);
+
+            return $result;
+        } catch (PDOException $e) {
+            echo 'Erro ao obter comentários: ' . $e->getMessage();
+        }
+    }
+}
 ?>

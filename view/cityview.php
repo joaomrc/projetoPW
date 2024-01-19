@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header('Location: index.php');
+    exit();
+}
 class CityView {
     public function showCities($cities) {
         ?>
@@ -12,7 +18,16 @@ class CityView {
         </head>
         <body>
             <div class="container">
-                <h1>CITY RATING</h1>
+                <header>
+                    <h1>City Rating</h1>
+        
+                    <div>   
+                        <label>Bem vindo/a,</label> 
+                        <span><?=$_COOKIE['username']?></span>
+                        <label>!</label> 
+                        <a href="logout.php">Sair</a>    
+                    </div>
+                </header>
 
                 <div class="cities-container">
                     <?php foreach ($cities as $city): ?>
@@ -46,37 +61,50 @@ class CityView {
                                 document.getElementById("city-description").textContent = cityDescription;
                                 document.getElementById("city-id").value = cityId;
 
+                                loadCityComments(cityId);
+
                                 cityDetail.classList.add("show-detail");
                             });
                         });
                     });
+
+                    function loadCityComments(cityId) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById("city-comments").innerHTML = xhr.responseText;
+        }
+    };
+    xhr.open("GET", "getcomments.php?cityId=" + cityId, true);
+    xhr.send();
+}
+
+document.getElementById("comment-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    var cityId = document.getElementById("city-id").value;
+    var comentarioNovo = document.getElementById("comentarioNovo").value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            loadCityComments(cityId);
+            document.getElementById("comentarioNovo").value = '';
+        }
+    };
+
+    xhr.open("POST", "index.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send("submitComment=true&cityId=" + cityId + "&comentarioNovo=" + comentarioNovo);
+});
+                    function showCityDetails(cityId, cityName, cityCountry, cityImage, cityDescription) {
+                        alert("Detalhes da cidade:\n\nNome: " + cityName + "\nPaís: " + cityCountry + "\nDescrição: " + cityDescription);
+                    }
                 </script>
             </div>
         </body>
         </html>
         <?php
-    }
-
-    private function generateRatingInputs($selectedRating) {
-        $inputs = '';
-        if (isset($selectedRating)) {
-            for ($i = 5; $i >= 1; $i--) {
-                $checked = ($i == $selectedRating) ? 'checked' : '';
-                $inputs .= "
-                    <input type='radio' id='star$i' name='rate' value='$i' $checked />
-                    <label for='star$i' title='$i stars'>$i stars</label>
-                ";
-            }
-        } else {
-
-            for ($i = 5; $i >= 1; $i--) {
-                $inputs .= "
-                    <input type='radio' id='star$i' name='rate' value='$i' />
-                    <label for='star$i' title='$i stars'>$i stars</label>
-                ";
-            }
-        }
-        return $inputs;
     }
 }
 ?>

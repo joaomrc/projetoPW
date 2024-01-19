@@ -12,18 +12,47 @@ body {
     background-repeat: no-repeat; 
 }
 
+header {
+    color: #fff;
+    text-align: left;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header div {
+    float: right;
+    color: white;
+    display: block;
+}
+
+header div span {
+    color: white;
+    font-weight: bold;
+}
+
+header div label {
+    color: #424242;
+}
+
 .container {
     background-color: #141414a1;
     border-radius: 8px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 45px;
     width: 120%;
     max-width: 850px;
     box-sizing: border-box;
 }
 
-h1, p {
+h1, p, span{
     color: #ffffff;
+}
+
+h1 {
+    font-style: italic;
+    color: #68c9e9;
 }
 
 h2 {
@@ -40,7 +69,7 @@ h3 {
 }
 
 .city-card {
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 15px;
     padding: 25px;
     background-color: #424242;
@@ -49,6 +78,15 @@ h3 {
 
 .city-card:hover {
     transform: scale(1.02);
+    background-color: #333;
+}
+
+.city-info {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.city-card:hover .city-info {
+    opacity: 0.8;
 }
 
 form {
@@ -73,16 +111,16 @@ label {
     border: 1px solid #ffffff;
     color: white;
     background-color: #424242;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 14px;
 }
 
 .submit-btn {
     padding: 10px 15px;
-    background-color: #F6B17A;
+    background-color: #68c9e9;;
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     font-size: 14px;
     float: right;
@@ -91,48 +129,12 @@ label {
 select {
     padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 14px;
     width: 100%;
     box-sizing: border-box;
 }
 
-
-.rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
-}
-.rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
-}
-.rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
-}
-.rate:not(:checked) > label:before {
-    content: '★ ';
-}
-.rate > input:checked ~ label {
-    color: #ffc700;    
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
-}
 
 .cities-container {
     display: flex;
@@ -144,6 +146,7 @@ select {
     width: calc(50% - 20px);
     box-sizing: border-box;
     margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .city-detail {
@@ -170,6 +173,88 @@ select {
     margin-top: 15px;
 }
 
+form {
+    margin: 20px auto;
+    background-color: #141414a1;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
 
 
+.comment-section {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+#city-comments {
+    margin-top: 10px;
+}
+
+.comment {
+    margin-bottom: 20px;
+    color: white;
+    background-color: #424242;
+    border-radius: 15px;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.comment:hover {
+    background-color: #333;
+}
+
+.comment strong {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.15em;
+    transition: color 0.3s ease-in-out;
+}
+
+.comment:hover strong {
+    color: #68c9e9;
+}
+
+#comment-form {
+    margin-top: 20px;
+}
+
+#comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#comment-form input[type="submit"] {
+    background-color: #68c9e9; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+#comment-form input[type="submit"]:hover {
+    background-color: #51b0cf;
+}
 
