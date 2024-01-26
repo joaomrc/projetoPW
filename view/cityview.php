@@ -1,8 +1,7 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['username'])) {
-    header('Location: index.php');
+if (!isset($_COOKIE['username'])) {
+    header('Location: login.php');
     exit();
 }
 class CityView {

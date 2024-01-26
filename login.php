@@ -16,6 +16,7 @@
     <header>
         <h1>City Rating</h1>
         <form id="getUsername" method="post">
+            <label>Bem-vindo</label>
             <label>Introduza o seu nome para aceder!</label>
             <input type="text" name="username" placeholder="Nome">
             <input type="submit" name="submit" value="Entrar">

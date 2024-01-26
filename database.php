@@ -16,8 +16,14 @@ class Database {
         }
     }
 
-    public function query($sql) {
+    public function query($sql, $params = array()) {
         $stmt = $this->conn->prepare($sql);
+
+        // Vincule os parâmetros usando bindValue
+        foreach ($params as $key => &$value) {
+            $stmt->bindValue($key, $value);
+        }
+
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

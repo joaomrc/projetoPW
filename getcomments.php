@@ -12,7 +12,7 @@ if (isset($_GET['cityId'])) {
 
         foreach ($result as $comment) {
             echo '<div class="comment">';
-            echo '<strong>@' . $comment['username'] . '</strong> ' . $comment['comment'];
+            echo '<strong>@' . $comment['username'] . '</strong> ' . $comment['rating'] . '</strong> ' . $comment['comment'];
             echo '</div>';
         }
     } catch (PDOException $e) {
