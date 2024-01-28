@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = 'localhost';
-    private $dbname = 'city_rating';
+    private $dbname = 'cityrating';
     private $username = 'root'; 
     private $password = ''; 
 
@@ -19,7 +19,6 @@ class Database {
     public function query($sql, $params = array()) {
         $stmt = $this->conn->prepare($sql);
 
-        // Vincule os parâmetros usando bindValue
         foreach ($params as $key => &$value) {
             $stmt->bindValue($key, $value);
         }
