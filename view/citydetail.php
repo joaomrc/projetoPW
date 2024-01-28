@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Detail</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body>
 
+<body>
 <div class="city-detail" id="city-detail">
     <h2 id="city-name"></h2>
     <h3 id="city-country"></h3>
@@ -23,136 +24,114 @@
         <label for="comentarioNovo">Deixe um comentário:</label>
         <textarea id="comentarioNovo" name="comentarioNovo" required></textarea>
 
-        <label for="avaliacao">Avaliação de 0 a 5:</label>
-        <input type="number" id="avaliacao" name="avaliacao" min="0" max="5" required>
+        <label for="avaliacao">Avaliação:</label>
+
+        <div class="rating">
+            <input type="radio" id="star1" name="rating" value="1" />
+            <label for="star1" title="1 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" />
+            <label for="star2" title="2 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" />
+            <label for="star3" title="3 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" />
+            <label for="star4" title="4 stars"></label>
+            <input type="radio" id="star5" name="rating" value="5" />
+            <label for="star5" title="5 star"></label>
+        </div>
 
         <input type="submit" name="submitComment" value="Comentar">
     </form>
-
-    </div>
+</div>
 
 </form>
     </div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var cityCard = document.querySelector('.city-card');
-            if (cityCard) {
-                cityCard.classList.add('selected');
+       document.addEventListener("DOMContentLoaded", function () {
+        var cityCard = document.querySelector('.city-card');
+        if (cityCard) {
+            cityCard.classList.add('selected');
+        }
+
+        loadRatingStars();
+    });
+
+    function addComment() {
+        var cityId = document.getElementById("city-id").value;
+        var comment = document.getElementById("comentarioNovo").value;
+        var rating = document.querySelector('input[name="rating"]:checked') ? document.querySelector('input[name="rating"]:checked').value : null;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Depois de adicionar o comentário e a avaliação, recarrega os comentários
+                loadCityComments(cityId);
+                document.getElementById("comentarioNovo").value = '';
+                // Limpa as seleções de estrelas
+                document.querySelectorAll('input[name="rating"]').forEach(input => input.checked = false);
+            }
+        };
+
+        xhr.open("POST", "addcomment.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("cityId=" + cityId + "&comment=" + comment + "&rating=" + rating);
+    }
+
+    function loadRatingStars() {
+        var ratingStarsContainer = document.getElementById('rating-stars');
+
+        for (var i = 5; i >= 1; i--) {
+            var star = document.createElement('span');
+            star.className = 'star';
+            star.setAttribute('data-rating', i);
+            star.innerHTML = '&#9733;'; // Caractere de estrela
+            star.addEventListener('click', function () {
+                var rating = this.getAttribute('data-rating');
+                setRatingStars(rating);
+            });
+
+            ratingStarsContainer.appendChild(star);
+        }
+    }
+
+    function setRatingStars(rating) {
+        var stars = document.querySelectorAll('.star');
+
+        stars.forEach(function (star) {
+            if (star.getAttribute('data-rating') <= rating) {
+                star.classList.add('checked');
+            } else {
+                star.classList.remove('checked');
             }
         });
+    }
 
-        function addComment() {
-    var cityId = document.getElementById("city-id").value;
-    var comment = document.getElementById("comentarioNovo").value;
-    var rating = document.getElementById("avaliacao").value;
+    // Função para mostrar os detalhes da cidade
+    function showCityDetails(cityId, cityName, cityCountry, cityImage, cityDescription) {
+         // Implemente a lógica para exibir os detalhes da cidade (pode ser semelhante ao código já existente)
+         document.getElementById("city-name").textContent = cityName;
+         document.getElementById("city-country").textContent = cityCountry;
+        document.getElementById("city-image").src = cityImage;
+        document.getElementById("city-description").textContent = cityDescription;
+        document.getElementById("city-id").value = cityId;
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // Depois de adicionar o comentário e a avaliação, recarrega os comentários
-            loadCityComments(cityId);
-            document.getElementById("comentarioNovo").value = '';
-            document.getElementById("avaliacao").value = '';
+        // Carrega os comentários da cidade
+        loadCityComments(cityId);
+
+        // Carrega as avaliações da cidade
+        loadCityRatings(cityId);
+
+        // Adiciona a classe para mostrar os detalhes
+        document.getElementById("city-detail").classList.add("show-detail");
+    }
+
+    // Função auxiliar para converter o rating em estrelas usando Font Awesome
+    function getStarRating(rating) {
+        var stars = '';
+        for (var i = 1; i <= 5; i++) {
+            stars += '<span class="fa fa-star' + (i <= rating ? ' checked' : '') + '"></span>';
         }
-    };
-
-    xhr.open("POST", "addcomment.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("cityId=" + cityId + "&comment=" + comment + "&rating=" + rating);
-}
-
-
-function addRating() {
-    var cityId = document.getElementById("rating-city-id").value;
-    var ratingValue = document.getElementById("ratingValue").value;
-
-    var formData = new FormData();
-    formData.append('cityId', cityId);
-    formData.append('rating', ratingValue);
-
-    fetch('addrating.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Se a avaliação for adicionada com sucesso, recarregue as avaliações
-            loadCityRatings(cityId);
-            document.getElementById("ratingValue").value = '';
-        } else {
-            // Se houver um erro, exiba uma mensagem de erro
-            console.error('Erro ao adicionar avaliação:', data.error);
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao enviar avaliação:', error);
-    });
-}
-
-        function loadCityRatings(cityId) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // Limpe as avaliações anteriores
-            document.getElementById("city-ratings").innerHTML = '';
-
-            // Adicione as novas avaliações apenas para a cidade correta
-            var ratings = JSON.parse(xhr.responseText);
-            ratings.forEach(function (rating) {
-                var ratingDiv = document.createElement("div");
-                ratingDiv.className = "rating";
-                ratingDiv.textContent = 'Rating: ' + rating.rating;
-                document.getElementById("city-ratings").appendChild(ratingDiv);
-            });
-        }
-    };
-    xhr.open("GET", "getratings.php?cityId=" + cityId, true);
-    xhr.send();
-}
-
-        // Função para mostrar os detalhes da cidade
-        function showCityDetails(cityId, cityName, cityCountry, cityImage, cityDescription) {
-            // Implemente a lógica para exibir os detalhes da cidade (pode ser semelhante ao código já existente)
-            document.getElementById("city-name").textContent = cityName;
-            document.getElementById("city-country").textContent = cityCountry;
-            document.getElementById("city-image").src = cityImage;
-            document.getElementById("city-description").textContent = cityDescription;
-            document.getElementById("city-id").value = cityId;
-
-            // Carrega os comentários da cidade
-            loadCityComments(cityId);
-
-            // Carrega as avaliações da cidade
-            loadCityRatings(cityId);
-
-            // Adiciona a classe para mostrar os detalhes
-            document.getElementById("city-detail").classList.add("show-detail");
-        }
-
-        function loadCityComments(cityId) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var commentsContainer = document.getElementById("city-comments");
-            commentsContainer.innerHTML = ''; // Limpa os comentários existentes
-
-            var comments = JSON.parse(xhr.responseText);
-            comments.forEach(function (comment) {
-                var commentDiv = document.createElement("div");
-                commentDiv.classList.add("comment");
-
-                var userRating = comment.rating !== null ? ' - Rating: ' + comment.rating : '';
-                commentDiv.innerHTML = '<strong>@' + comment.username + '</strong>' + userRating + ' ' + comment.comment;
-
-                commentsContainer.appendChild(commentDiv);
-            });
-        }
-    };
-    xhr.open("GET", "getcomments.php?cityId=" + cityId, true);
-    xhr.send();
-}
+        return stars;
+    }
 
     </script>
 </div>

@@ -68,15 +68,15 @@ class CityView {
                     });
 
                     function loadCityComments(cityId) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("city-comments").innerHTML = xhr.responseText;
-        }
-    };
-    xhr.open("GET", "getcomments.php?cityId=" + cityId, true);
-    xhr.send();
-}
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                document.getElementById("city-comments").innerHTML = xhr.responseText;
+                            }
+                        };
+                        xhr.open("GET", "getcomments.php?cityId=" + cityId, true);
+                        xhr.send();
+                    }
 
 document.getElementById("comment-form").addEventListener("submit", function (event) {
     event.preventDefault();
