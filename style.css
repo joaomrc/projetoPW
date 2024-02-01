@@ -42,7 +42,7 @@ header div label {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     padding: 45px;
     width: 120%;
-    max-width: 850px;
+    max-width: 1000px;
     box-sizing: border-box;
 }
 
@@ -156,9 +156,9 @@ select {
 
 .show-detail {
     display: block;
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #424242;
+    padding-top: 40px;
 }
 
 #city-description {
@@ -204,9 +204,9 @@ input[type="submit"]:hover {
 
 
 .comment-section {
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #424242;
+    padding-top: 40px;
 }
 
 #city-comments {
@@ -251,10 +251,8 @@ input[type="submit"]:hover {
     margin-bottom: 10px;
     padding: 0;
     resize: vertical;
-
-    /* Opcionais, adiciona ou remove styling para customizares o teu textarea */
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 #comment-form input[type="submit"] {
@@ -263,6 +261,7 @@ input[type="submit"]:hover {
     padding: 10px 15px;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 #comment-form input[type="submit"]:hover {
@@ -290,4 +289,73 @@ input[type="submit"]:hover {
 .rating-container input:checked ~ label,
 .rating-container input:hover ~ label {
     color: #ffac00;
+}
+
+.footer-basic {
+  padding:40px 0;
+  background-color:#ffffff00;
+  color:#ffffff;
+}
+
+.footer-basic ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer-basic li {
+  padding:0 10px;
+}
+
+.footer-basic ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer-basic ul a:hover {
+  opacity:1;
+}
+
+.footer-basic .social {
+  text-align:center;
+}
+
+.footer-basic .social > a {
+  font-size:24px;
+  width:40px;
+  height:40px;
+  line-height:40px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  border:1px solid #ccc;
+  margin:0 8px;
+  color:inherit;
+  opacity:0.75;
+}
+
+.footer-basic .social > a:hover {
+  opacity:0.9;
+}
+
+.footer-basic .copyright {
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+  font-style: italic;
+}
+
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free";
+    color: #ffac00;
+}
+a:-webkit-any-link {
+    cursor: pointer;
+    text-decoration: none;
 }

@@ -13,10 +13,9 @@ if (isset($_GET['cityId'])) {
         foreach ($result as $comment) {
             echo '<div class="comment">';
             echo '<strong>@' . $comment['username'] . '</strong>';
-    
-            // Print star ratings based on the numerical rating
+
             if ($comment['rating'] !== null) {
-                $stars = intval($comment['rating']); // Convert rating to integer
+                $stars = intval($comment['rating']);
                 for ($i = 0; $i < $stars; $i++) {
                     echo '<i class="fa fa-star"></i>';
                 }
@@ -25,7 +24,6 @@ if (isset($_GET['cityId'])) {
                 }
             }
     
-            // Print the rest of the comment
             echo ' ' . $comment['comment'];
             echo '</div>';
         }

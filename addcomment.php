@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = new Database();
 
         try {
-            // Adiciona o comentário e a avaliação à tabela 'comentarios'
             $sql = "INSERT INTO comentarios (city_id, username, comment, rating) VALUES (?, ?, ?, ?)";
             $params = array($cityId, $_COOKIE['username'], $comment, $rating);
             $db->execute($sql, $params);

@@ -33,7 +33,6 @@ class CityController {
     }
 
     public function submit() {
-
     }
 }
 ?>

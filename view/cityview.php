@@ -78,24 +78,24 @@ class CityView {
                         xhr.send();
                     }
 
-document.getElementById("comment-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-    
-    var cityId = document.getElementById("city-id").value;
-    var comentarioNovo = document.getElementById("comentarioNovo").value;
+                    document.getElementById("comment-form").addEventListener("submit", function (event) {
+                        event.preventDefault();
+                        
+                        var cityId = document.getElementById("city-id").value;
+                        var comentarioNovo = document.getElementById("comentarioNovo").value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            loadCityComments(cityId);
-            document.getElementById("comentarioNovo").value = '';
-        }
-    };
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                loadCityComments(cityId);
+                                document.getElementById("comentarioNovo").value = '';
+                            }
+                        };
 
-    xhr.open("POST", "index.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("submitComment=true&cityId=" + cityId + "&comentarioNovo=" + comentarioNovo);
-});
+                        xhr.open("POST", "index.php", true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr.send("submitComment=true&cityId=" + cityId + "&comentarioNovo=" + comentarioNovo);
+                    });
                     function showCityDetails(cityId, cityName, cityCountry, cityImage, cityDescription) {
                         alert("Detalhes da cidade:\n\nNome: " + cityName + "\nPaís: " + cityCountry + "\nDescrição: " + cityDescription);
                     }
